@@ -1,0 +1,45 @@
+
+kernel32.dll
+user32.dll
+gdi32.dll
+
+
+CopyMemory(lpString, szString, lstren(szString)+1);
+
+HANDLE hFileRead;
+hFileRead = CreateFile(
+    "book1.txt",
+    GENERIC_READ,
+    FILE_SHARE_READ,
+    NULL,
+    OPEN_EXISTING,
+    FILE_ATTRIBUTE_NORMAL,
+    NULL
+);
+if(hFileRead == IVALID_HANDLE_VALUE){
+    printf("打印错误信息");
+    return -1;
+}
+
+DWORD nIn;
+
+while(ReadFile(hFileRead, buffer, BUF_SIZE, &nIn, NULL) && nIn > 0){
+    printf("%s\n", buffer);
+}
+CloseHandle(hFileRead);
+
+//windows 访问的时间
+typedef struct _WIN32_FILE_ATTRIBUTE_DATA {
+    DWORD dwFileAttributes;
+    FILETIME ftCreationTime;
+    FILETIME ftLastAccessTime;
+    FILETIME ftLastWriteTime;
+    DWORD nFileSizeHigh;
+    DWORD nFileSizeLow;
+} WIN32_FILE_ATTRIBUTE_DATA, *LPWIN32_FILE_ATTRIBUTE_DATA;
+
+
+
+
+
+
