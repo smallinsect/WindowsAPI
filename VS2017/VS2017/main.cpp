@@ -6,17 +6,17 @@
 #include <iostream>
 using namespace std;
 
-typedef int(*lpAdd)(int, int);
+typedef int(*LPAdd)(int, int);
 
 int main(int argc, char *argv[]) {
 
-	HMODULE hModule = LoadLibrary(TEXT("DemoDLL.dll"));
+	HMODULE hModule = LoadLibrary(TEXT("MyDLL.dll"));
 	int n = GetLastError();
 	if (hModule != NULL) {
-		lpAdd add = (lpAdd)GetProcAddress(hModule, TEXT("add"));
+		LPAdd lpAdd = (LPAdd)GetProcAddress(hModule, TEXT("add"));
 		n = GetLastError();
-		if (add != NULL) {
-			printf("%d\n", add(22, 33));
+		if (lpAdd != NULL) {
+			printf("%d\n", lpAdd(22, 33));
 		}
 		FreeLibrary(hModule);
 	}
