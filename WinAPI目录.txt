@@ -5,7 +5,14 @@ Demo01
 		WriteFile 写文件
 	fun02
 		setlocale(LC_ALL, "");//配置地域信息
-		MultiByteToWideChar
+		MultiByteToWideChar 多字节转宽字符
+		WideCharToMultiByte 宽字符转多字节
+	fun03
+		遍历卷
+		GetLogicalDriveStrings 获取所有盘符
+		FindFirstVolume 
+		FindNextVolume
+		FindVolumeClose
 
 DemoWin01
 	显示一个简单窗口

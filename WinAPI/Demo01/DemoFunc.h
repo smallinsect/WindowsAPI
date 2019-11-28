@@ -8,7 +8,8 @@
 
 
 void fun01();
-void fun02();
+void fun02(); 
+void fun03();
 
 
 #endif

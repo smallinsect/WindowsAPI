@@ -63,3 +63,34 @@ void fun02() {
 
 	printf("W->M %s\n", psText);
 }
+
+#define BUFSIZE 1024
+
+//遍历卷
+void fun03() {
+	printf("************第一种查找卷****************\n");
+	CHAR szLogicalDriveStrings[BUFSIZE];
+	ZeroMemory(szLogicalDriveStrings, BUFSIZE);
+	//获取所有盘符
+	GetLogicalDriveStrings(BUFSIZE-1, szLogicalDriveStrings);
+	//c:\\0d:\\0e:\\0\0 获取的盘符样子
+	//printf("%s\n", szLogicalDriveStrings);
+	PCHAR szDrive = (PCHAR)szLogicalDriveStrings;
+	do {
+		printf("%s\n", szDrive);
+		szDrive += lstrlen(szDrive) + 1;
+	} while (*szDrive != '\0');
+
+	printf("************第二种查找卷****************\n");
+	TCHAR buf[BUFSIZE];
+	BOOL bFlag;
+	HANDLE hVol = FindFirstVolume(buf, BUFSIZE);
+	if (hVol == INVALID_HANDLE_VALUE) {
+		printf("no found volumes ...\n");
+		return;
+	}
+	do {
+		printf("%s\n", buf);//打印出来的是设备名
+	} while (FindNextVolume(hVol, buf, BUFSIZE));
+	bFlag = FindVolumeClose(hVol);
+}
