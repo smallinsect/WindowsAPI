@@ -17,9 +17,12 @@ Demo01
 		驱动器属性
 		GetDriveType
 		GetVolumeInformation
-	
+	fun05
+		磁盘容量
+		GetDiskFreeSpace
+		GetDiskFreeSpaceEx
 
-	
+
 DemoWin01
 	显示一个简单窗口
 

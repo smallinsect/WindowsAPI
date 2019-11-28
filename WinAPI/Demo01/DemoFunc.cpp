@@ -144,3 +144,46 @@ void fun04() {
 	if (dwFileSystemFlags & FILE_VOLUME_QUOTAS) {//配合
 	}
 }
+
+//磁盘容量
+void fun05(){
+	printf("************第一种获取磁盘容量****************\n");
+	DWORD dwTotalClusters;//总 簇
+	DWORD dwFreeClusters;//空余 簇
+	DWORD dwSectPerClust;//每个簇有多少个扇区
+	DWORD dwBytesPerSect;//每个扇区有多少个字节
+	BOOL bResult = GetDiskFreeSpace("C:",
+		&dwSectPerClust,
+		&dwBytesPerSect,
+		&dwFreeClusters,
+		&dwTotalClusters);
+	if (bResult) {
+		printf("获取磁盘空间信息\n");
+		printf("总簇数量：      %d\n", dwTotalClusters);
+		printf("空闲的簇数量：  %d\n", dwFreeClusters);
+		printf("每簇的扇区数量：%d\n", dwSectPerClust);
+		printf("每扇区字节数：  %d\n", dwBytesPerSect);
+		printf("磁盘总容量：    %I64d\n", (DWORD64)dwTotalClusters*dwSectPerClust*dwBytesPerSect);
+		printf("磁盘空闲容量：  %I64d\n", (DWORD64)dwFreeClusters*dwSectPerClust*dwBytesPerSect);
+	}
+
+	printf("************第二种获取磁盘容量****************\n");
+	
+	DWORD64 qwFreeBytes, qwFreeBytesToCaller, qwTotalBytes;
+	bResult = GetDiskFreeSpaceEx("C:",
+		(PULARGE_INTEGER)&qwFreeBytesToCaller,
+		(PULARGE_INTEGER)&qwTotalBytes,
+		(PULARGE_INTEGER)&qwFreeBytes);
+	if (bResult) {
+		printf("获取磁盘空间信息\n");
+		printf("磁盘总容量：      %I64d\n", qwTotalBytes);
+		printf("可用磁盘空闲容量：%I64d\n", qwFreeBytes);
+		printf("磁盘空闲容量：    %I64d\n", qwFreeBytesToCaller);
+	}
+
+}
+void fun06(){}
+void fun07(){}
+void fun08(){}
+void fun09(){}
+void fun10(){}
