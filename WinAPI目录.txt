@@ -3,6 +3,10 @@ Demo01
 		GetSystemDirectory 获取系统文件目录
 		CreateFile 创建文件
 		WriteFile 写文件
+	fun02
+		setlocale(LC_ALL, "");//配置地域信息
+		MultiByteToWideChar
+
 DemoWin01
 	显示一个简单窗口
 
