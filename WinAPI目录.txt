@@ -1,0 +1,11 @@
+Demo01
+	fun01
+		GetSystemDirectory 获取系统文件目录
+		CreateFile 创建文件
+		WriteFile 写文件
+DemoWin01
+	显示一个简单窗口
+
+
+
+
