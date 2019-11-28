@@ -7,16 +7,16 @@
 #include <windows.h>
 
 
-void fun01();
-void fun02(); 
-void fun03();
-void fun04();
-void fun05(); 
-void fun06();
-void fun07();
-void fun08();
-void fun09();
-void fun10();
+void fun01(int argc, char *argv[]);
+void fun02(int argc, char *argv[]); 
+void fun03(int argc, char *argv[]);
+void fun04(int argc, char *argv[]);
+void fun05(int argc, char *argv[]); 
+void fun06(int argc, char *argv[]);
+void fun07(int argc, char *argv[]);
+void fun08(int argc, char *argv[]);
+void fun09(int argc, char *argv[]);
+void fun10(int argc, char *argv[]);
 
 
 #endif

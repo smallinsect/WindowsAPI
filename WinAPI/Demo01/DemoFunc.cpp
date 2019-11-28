@@ -3,7 +3,7 @@
 #include "DemoFunc.h"
 
 //获取系统目录 将目录写入文件中
-void fun01() {
+void fun01(int argc, char *argv[]) {
 	TCHAR szSystemDir[MAX_PATH];
 	//获取系统目录
 	GetSystemDirectory(szSystemDir, MAX_PATH);
@@ -28,7 +28,7 @@ void fun01() {
 }
 
 //宽字符和多字节之间的转换
-void fun02() {
+void fun02(int argc, char *argv[]) {
 	DWORD dwNum;
 	//配置地域信息
 	setlocale(LC_ALL, "");
@@ -67,7 +67,7 @@ void fun02() {
 #define BUFSIZE 1024
 
 //遍历卷
-void fun03() {
+void fun03(int argc, char *argv[]) {
 	printf("************第一种查找卷****************\n");
 	CHAR szLogicalDriveStrings[BUFSIZE];
 	ZeroMemory(szLogicalDriveStrings, BUFSIZE);
@@ -96,7 +96,7 @@ void fun03() {
 }
 
 //获取驱动属性
-void fun04() {
+void fun04(int argc, char *argv[]) {
 
 	UINT uDriveType = GetDriveType("C:/");
 	printf("%d\n", uDriveType);
@@ -146,7 +146,7 @@ void fun04() {
 }
 
 //磁盘容量
-void fun05(){
+void fun05(int argc, char *argv[]){
 	printf("************第一种获取磁盘容量****************\n");
 	DWORD dwTotalClusters;//总 簇
 	DWORD dwFreeClusters;//空余 簇
@@ -182,11 +182,55 @@ void fun05(){
 	}
 
 }
-
-void fun06(){
-
+//文件删除 移动 重命名 操作
+void fun06(int argc, char *argv[]){
+	//printf("个数:%d\n", argc);
+	//printf("第一个:%s\n", argv[0]);
+	//printf("第二个:%s\n", argv[1]);
+	//printf("第三个:%s\n", argv[2]);
+	
+	if (argc == 3 && lstrcmp("-d", argv[1]) == 0) {//-d 删除文件
+		if (DeleteFile(argv[2])) {
+			printf("删除文件成功\n");
+		}
+		else {
+			printf("删除文件失败：%d\n", GetLastError());
+		}
+	}
+	else if (argc == 4 && lstrcmp("-c", argv[1]) == 0) {//-c 复制文件
+		if (CopyFile(argv[2], argv[3], TRUE)) {//TRUE 复制时 有文件存在，不覆盖
+			printf("复制文件成功\n");
+		}
+		else {//说明文件有了，是否覆盖
+			if (GetLastError() == 0x50) {
+				printf("文件%s已经存在，是否覆盖？y/n:", argv[3]);
+				if ('y' == getchar()) {
+					if (CopyFile(argv[2], argv[3], FALSE)) {//FALSE 复制时 有文件存在，直接覆盖
+						printf("复制文件成功\n");
+					}
+					else {
+						printf("复制文件失败：%d\n", GetLastError());
+					}
+				}
+				else {
+					return;
+				}
+			}
+		}
+	}
+	else if (argc == 4 && lstrcmp("-m", argv[1]) == 0) {//-m 移动文件
+		if (MoveFile(argv[2], argv[3])) {
+			printf("名文件重命成功\n");
+		}
+		else {
+			printf("名文件重命名错误：%d\n", GetLastError());
+		}
+	}
+	else {//参数错误
+		printf("参数错误！\n");
+	}
 }
-void fun07(){}
-void fun08(){}
-void fun09(){}
-void fun10(){}
+void fun07(int argc, char *argv[]){}
+void fun08(int argc, char *argv[]){}
+void fun09(int argc, char *argv[]){}
+void fun10(int argc, char *argv[]){}
