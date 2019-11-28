@@ -10,10 +10,16 @@ Demo01
 	fun03
 		遍历卷
 		GetLogicalDriveStrings 获取所有盘符
-		FindFirstVolume 
+		FindFirstVolume 获取设备名称
 		FindNextVolume
 		FindVolumeClose
+	fun04
+		驱动器属性
+		GetDriveType
+		GetVolumeInformation
+	
 
+	
 DemoWin01
 	显示一个简单窗口
 

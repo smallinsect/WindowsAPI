@@ -94,3 +94,53 @@ void fun03() {
 	} while (FindNextVolume(hVol, buf, BUFSIZE));
 	bFlag = FindVolumeClose(hVol);
 }
+
+//获取驱动属性
+void fun04() {
+
+	UINT uDriveType = GetDriveType("C:/");
+	printf("%d\n", uDriveType);
+	switch (uDriveType) {
+	case DRIVE_UNKNOWN://未知盘
+		break;
+	case DRIVE_NO_ROOT_DIR://无效值
+		break;
+	case DRIVE_REMOVABLE://可移动的软盘，例如U盘。
+		break;
+	case DRIVE_FIXED://硬盘
+		break;
+	case DRIVE_REMOTE://远程，通过网络共享过来的
+		break;
+	case DRIVE_CDROM://光盘
+		break;
+	case DRIVE_RAMDISK://闪盘，U盘
+		break;
+	default:
+		break;
+	}
+
+	CHAR szDriveName[MAX_PATH];
+	DWORD dwVolumeSerialNumber;
+	DWORD dwMaximumComponentLength;
+	DWORD dwFileSystemFlags;
+	CHAR szFileSystemNameBuffer[MAX_PATH];
+	if (!GetVolumeInformation("d:/",
+		szDriveName, MAX_PATH,
+		&dwVolumeSerialNumber,//硬盘序列号
+		&dwMaximumComponentLength,//硬盘字符串长度
+		&dwFileSystemFlags,//更多的属性信息
+		szFileSystemNameBuffer,//文件系统名称 NTFS
+		MAX_PATH)) 
+	{
+		printf("获取信息失败\n");
+		return;
+	}
+	if (lstrlen(szDriveName) > 0) {
+		printf("Drive Name is %s\n", szDriveName);//卷标 
+	}
+	printf("%d\n", dwVolumeSerialNumber);//硬盘序列号
+	printf("%d\n", dwMaximumComponentLength);//文件名最长
+	printf("%s\n", szFileSystemNameBuffer);//文件系统类型
+	if (dwFileSystemFlags & FILE_VOLUME_QUOTAS) {//配合
+	}
+}

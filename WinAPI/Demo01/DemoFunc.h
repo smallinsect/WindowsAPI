@@ -10,6 +10,7 @@
 void fun01();
 void fun02(); 
 void fun03();
+void fun04();
 
 
 #endif
