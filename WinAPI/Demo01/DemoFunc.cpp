@@ -182,7 +182,10 @@ void fun05(){
 	}
 
 }
-void fun06(){}
+
+void fun06(){
+
+}
 void fun07(){}
 void fun08(){}
 void fun09(){}

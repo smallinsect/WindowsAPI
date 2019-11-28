@@ -21,7 +21,7 @@ Demo01
 		磁盘容量
 		GetDiskFreeSpace
 		GetDiskFreeSpaceEx
-
+	fun06
 
 DemoWin01
 	显示一个简单窗口
@@ -33,6 +33,15 @@ DemoMFC01
 	使用MFC创建对话窗口
 	给窗口添加按钮，按钮添加点击事件。
 	给窗口添加鼠标左键按下消息处理。
+DemoMFC02
+	文件操作
+	C
+	C++
+	Windows API
+	Windows MFC
+
+
+
 
 
 

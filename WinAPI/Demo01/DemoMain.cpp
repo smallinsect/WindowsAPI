@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
 	//fun02();
 	//fun03();
 	//fun04();
-	fun05();
+	//fun05();
 	fun06();
 	fun07();
 	fun08();
