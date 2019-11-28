@@ -48,7 +48,11 @@ DemoMFC02
 	C++
 	Windows API
 	Windows MFC
-
+DemoMFC03
+	CreateDirectory 创建目录
+	GetCurrentDirectory 获取当前程序目录
+	SetCurrentDirectory 设置当前程序目录
+	GetModuleFileName 获取模块路径
 
 
 
