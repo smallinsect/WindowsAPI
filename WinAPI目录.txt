@@ -31,6 +31,14 @@ Demo01
 		fopen
 		CreateFile ReadFile WriteFile
 		CopyFile
+	fun08
+		遍历目录
+		WIN32_FIND_DATA 文件基本信息
+		FindFirstFile 查找文件
+		FindNextFile 查找下一个文件
+	fun09
+		文件属性和时间
+		
 
 DemoWin01
 	显示一个简单窗口

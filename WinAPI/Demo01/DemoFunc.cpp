@@ -296,6 +296,29 @@ void fun07(int argc, char *argv[]){
 	CloseHandle(hWrite);
 	//********************API复制文件************************
 }
-void fun08(int argc, char *argv[]){}
+
+//遍历目录
+void fun08(int argc, char *argv[]){
+	WIN32_FIND_DATA findFileData;
+
+	HANDLE hFindFile = FindFirstFile(TEXT("c:/*"), &findFileData);
+	if (hFindFile == INVALID_HANDLE_VALUE) {
+		printf("错误：%d\n", GetLastError());
+		return;
+	}
+	do {
+		printf("%s\t\t", findFileData.cFileName);
+		if (findFileData.dwFileAttributes & FILE_ATTRIBUTE_ENCRYPTED) {
+			printf("<加密>");
+		}
+		if (findFileData.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN) {
+			printf("<隐藏>");
+		}
+		if (findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+			printf("<DIR>");
+		}
+		printf("\n");
+	} while (FindNextFile(hFindFile, &findFileData));
+}
 void fun09(int argc, char *argv[]){}
 void fun10(int argc, char *argv[]){}
