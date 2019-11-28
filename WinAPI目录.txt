@@ -45,6 +45,10 @@ Demo01
 		FileTimeToSystemTime 文件时间转系统时间
 		WIN32_FILE_ATTRIBUTE_DATA 文件的所有属性
 		SYSTEMTIME 系统时间，包涵年月日时分秒
+	fun10
+
+
+
 
 DemoWin01
 	显示一个简单窗口
@@ -67,8 +71,14 @@ DemoMFC03
 	GetCurrentDirectory 获取当前程序目录
 	SetCurrentDirectory 设置当前程序目录
 	GetModuleFileName 获取模块路径
-
-
+DemoMFC04
+	内存映射文件
+	1.创建文件对象 CreateFile
+	2.创建文件映射对象 CreateFileMapping
+	3.将文件的数据映射到进程的地址空间 MapViewOfFile
+	4.从进程的地址空间撤销对文件数据的映射 UnmapViewOfFile
+	5.关闭文件映射对象 CloseHandle
+	6.关闭文件对象 CloseHandle
 
 
 
