@@ -26,6 +26,11 @@ Demo01
 		DeleteFile 删除文件
 		CopyFile 复制文件
 		MoveFile 移动文件
+	fun07
+		文件复制
+		fopen
+		CreateFile ReadFile WriteFile
+		CopyFile
 
 DemoWin01
 	显示一个简单窗口

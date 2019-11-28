@@ -7,6 +7,8 @@
 #include <windows.h>
 
 
+#define BUFSIZE 1024
+
 void fun01(int argc, char *argv[]);
 void fun02(int argc, char *argv[]); 
 void fun03(int argc, char *argv[]);

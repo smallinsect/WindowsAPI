@@ -64,7 +64,6 @@ void fun02(int argc, char *argv[]) {
 	printf("W->M %s\n", psText);
 }
 
-#define BUFSIZE 1024
 
 //遍历卷
 void fun03(int argc, char *argv[]) {
@@ -230,7 +229,73 @@ void fun06(int argc, char *argv[]){
 		printf("参数错误！\n");
 	}
 }
-void fun07(int argc, char *argv[]){}
+//文件复制 C 和 API
+void fun07(int argc, char *argv[]){
+	if (argc < 3) {
+		printf(" Demo01 a.txt b.txt\n");
+		return;
+	}
+	//********************C复制文件************************
+	//FILE *pRFile = fopen(argv[1], "rb");
+	//if (pRFile == NULL) {
+	//	perror(argv[1]);
+	//	return;
+	//}
+	//FILE *pWFile = fopen(argv[2], "wb");
+	//if (pWFile == NULL) {
+	//	perror(argv[2]);
+	//	return;
+	//}
+	//char buf[BUFSIZE];
+	//size_t rSize, wSize;
+	//while ((rSize = fread(buf, 1, BUFSIZE, pRFile)) > 0) {
+	//	wSize = fwrite(buf, 1, rSize, pWFile);
+	//	if (rSize != wSize) {
+	//		perror("Fetal write error.");
+	//		return;
+	//	}
+	//}
+
+	//fclose(pRFile);
+	//fclose(pWFile);
+	//********************C复制文件************************
+
+	//********************API复制文件************************
+	HANDLE hRead = CreateFile(argv[1],
+		GENERIC_READ,//打开文件 读
+		FILE_SHARE_READ,//打开共享文件 读
+		NULL,
+		OPEN_EXISTING,//打开已存在的文件
+		FILE_ATTRIBUTE_NORMAL,//常规文件属性
+		NULL);
+	if (hRead == INVALID_HANDLE_VALUE) {
+		printf("打开文件错误：%d\n", GetLastError());
+		return;
+	}
+	HANDLE hWrite = CreateFile(argv[2],
+		GENERIC_WRITE,//打开文件 写
+		0,// 0不共享 FILE_SHARE_WRITE,//共享 写
+		NULL,
+		CREATE_ALWAYS,//总是创建新的文件
+		FILE_ATTRIBUTE_NORMAL,//常规文件
+		NULL);
+	if (hWrite == INVALID_HANDLE_VALUE) {
+		printf("输出文件错误：%d\n", GetLastError());
+		return;
+	}
+	DWORD dwRead, dwWrite;
+	CHAR buffer[BUFSIZE];
+	while (ReadFile(hRead, buffer, BUFSIZE, &dwRead, NULL) && dwRead > 0) {
+		WriteFile(hWrite, buffer, dwRead, &dwWrite, NULL);
+		if (dwRead != dwWrite) {
+			printf("写文件，严重错误 %d\n", GetLastError());
+			return;
+		}
+	}
+	CloseHandle(hRead);
+	CloseHandle(hWrite);
+	//********************API复制文件************************
+}
 void fun08(int argc, char *argv[]){}
 void fun09(int argc, char *argv[]){}
 void fun10(int argc, char *argv[]){}
