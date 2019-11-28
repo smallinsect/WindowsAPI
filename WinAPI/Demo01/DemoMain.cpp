@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
 	//fun05( argc, argv);
 	//fun06( argc, argv);
 	//fun07( argc, argv);
-	fun08( argc, argv);
+	//fun08( argc, argv);
 	fun09( argc, argv);
 	fun10( argc, argv);
 	system("pause");

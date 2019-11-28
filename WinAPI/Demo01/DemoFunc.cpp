@@ -320,5 +320,63 @@ void fun08(int argc, char *argv[]){
 		printf("\n");
 	} while (FindNextFile(hFindFile, &findFileData));
 }
-void fun09(int argc, char *argv[]){}
+//显示时间
+void ShowFileTime(PFILETIME lptime) {
+	FILETIME ftLocal;
+	FileTimeToLocalFileTime(lptime, &ftLocal);//标准时间转换成本地时间
+	SYSTEMTIME st;
+	FileTimeToSystemTime(&ftLocal, &st);//本地时间转换成系统时间，系统时间有年月日时分秒，本地时间是一个很大的数
+	printf("%4d年%02d月%02d日，%02d:%02d:%02d\n", 
+		st.wYear, st.wMonth, st.wDay,
+		st.wHour, st.wMinute, st.wSecond);
+}
+//计算文件大小
+void ShowFileSize(DWORD dwFileSizeHigh, DWORD dwFileSizeLow) {
+	ULONGLONG liFileSize;
+	liFileSize = dwFileSizeHigh;
+	liFileSize <<= 32;
+	liFileSize += dwFileSizeLow;
+	printf("文件大小：%I64u\n", liFileSize);
+}
+//显示文件属性
+void ShowFileAttrInfo(DWORD dwFileAttributes) {
+	if (dwFileAttributes & FILE_ATTRIBUTE_ARCHIVE) {
+		printf(" ARCHIVE");
+	}
+	else if (dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+		printf(" DIRECTORY");
+	}
+	else if (dwFileAttributes & FILE_ATTRIBUTE_READONLY) {
+		printf(" READONLY");
+	}
+}
+//文件属性和时间
+void fun09(int argc, char *argv[]){
+	
+	TCHAR szFile[] = TEXT("book.txt");
+	WIN32_FILE_ATTRIBUTE_DATA wfad;
+	if (!GetFileAttributesEx(szFile, GetFileExInfoStandard, &wfad)) {
+		printf("获取文件属性失败：%d\n", GetLastError());
+		return;
+	}
+	printf("创建时间：");
+	ShowFileTime(&(wfad.ftCreationTime));
+	printf("访问时间：");
+	ShowFileTime(&(wfad.ftLastAccessTime));
+	printf("修改时间：");
+	ShowFileTime(&(wfad.ftLastWriteTime));
+	ShowFileSize(wfad.nFileSizeHigh, wfad.nFileSizeLow);
+	ShowFileAttrInfo(wfad.dwFileAttributes);
+
+	//获取所有文件属性
+	//DWORD dwFileAttributes = GetFileAttributes(szFile);
+	//dwFileAttributes |= FILE_ATTRIBUTE_READONLY;
+	//dwFileAttributes |= FILE_ATTRIBUTE_HIDDEN;
+	//if (SetFileAttributes(szFile, dwFileAttributes)) {
+	//	printf("文件 %s 的隐藏和只读属性设置成功\n", szFile);
+	//}
+	//else {
+	//	printf("属性设置失败：%d\n", GetLastError());
+	//}
+}
 void fun10(int argc, char *argv[]){}

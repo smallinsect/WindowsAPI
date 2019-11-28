@@ -38,7 +38,13 @@ Demo01
 		FindNextFile 查找下一个文件
 	fun09
 		文件属性和时间
-		
+		GetFileAttributes 获取文件属性
+		SetFileAttributes 设置文件属性
+		GetFileAttributesEx 获取文件所有属性
+		FileTimeToLocalFileTime 文件时间转当地时间
+		FileTimeToSystemTime 文件时间转系统时间
+		WIN32_FILE_ATTRIBUTE_DATA 文件的所有属性
+		SYSTEMTIME 系统时间，包涵年月日时分秒
 
 DemoWin01
 	显示一个简单窗口
