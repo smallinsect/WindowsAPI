@@ -379,4 +379,70 @@ void fun09(int argc, char *argv[]){
 	//	printf("属性设置失败：%d\n", GetLastError());
 	//}
 }
-void fun10(int argc, char *argv[]){}
+//
+void fun10(int argc, char *argv[]){
+	//********************获取系统版本信息
+	//OSVERSIONINFO ovex;
+	//TCHAR szVersionInfo[1024] = {0};
+	//ovex.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+	//if (!GetVersionEx(&ovex)) {
+	//	printf("错误：%d\n", GetLastError());
+	//	return;
+	//}
+	//if (ovex.dwMajorVersion == 5) {
+	//	if (ovex.dwMinorVersion == 0) {
+	//		lstrcat(szVersionInfo, "Windows 2000");
+	//	}
+	//	else if (ovex.dwMinorVersion == 1) {
+	//		lstrcat(szVersionInfo, "Windows XP");
+	//	}
+	//	else if (ovex.dwMinorVersion == 2) {
+	//		lstrcat(szVersionInfo, "Windows Server 2003");
+	//	}
+	//}
+	//else if (ovex.dwMajorVersion == 6) {
+	//	lstrcat(szVersionInfo, "Windows Vista");
+	//}
+	//else {
+	//	lstrcat(szVersionInfo, "Windows 其它");
+	//}
+	//printf("%s\n", szVersionInfo);
+	//printf("Windows %d.%d Build %d",
+	//	ovex.dwMajorVersion,
+	//	ovex.dwMinorVersion,
+	//	ovex.dwPlatformId);
+	//printf("%s\n", ovex.szCSDVersion);
+
+	//获取硬件信息
+	SYSTEM_INFO si;
+	GetSystemInfo(&si);
+	printf("内存分页大小：0x%.0X，可用内存起始：0x%.8X，可用内存年结束：0x%.8X\n",
+		si.dwPageSize,
+		si.lpMinimumApplicationAddress,
+		si.lpMaximumApplicationAddress);
+	printf("处理器个数：%d\n", si.dwNumberOfProcessors);
+	printf("处理器类型：\n");
+	switch (si.dwProcessorType) {
+	case PROCESSOR_INTEL_386:
+		printf("386\n");
+		break;
+	case PROCESSOR_INTEL_486:
+		printf("486\n");
+		break;
+	case PROCESSOR_INTEL_PENTIUM:
+		printf("PENTIUM\n");
+		break;
+	default:
+		printf("%d\n", si.dwProcessorType);
+		break;
+	}
+	printf("处理器架构：");
+	switch (si.wProcessorArchitecture) {
+	case PROCESSOR_ARCHITECTURE_INTEL:
+		printf("INTEL\n");
+		break;
+	default:
+		printf("%d\n", si.wProcessorArchitecture);
+		break;
+	}
+}

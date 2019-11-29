@@ -46,7 +46,13 @@ Demo01
 		WIN32_FILE_ATTRIBUTE_DATA 文件的所有属性
 		SYSTEMTIME 系统时间，包涵年月日时分秒
 	fun10
-
+		系统信息
+		系统版本
+		GetVersionEx
+		OSVERSIONINFOEX
+		硬件信息
+		GetSystemInfo
+		SYSTEM_INFO
 
 
 
