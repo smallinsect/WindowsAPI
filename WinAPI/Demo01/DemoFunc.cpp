@@ -474,8 +474,21 @@ void fun11(int argc, char *argv[]){
 		SystemParametersInfo(SPI_SETMOUSE, 0, aMouseInfo, SPIF_SENDCHANGE);
 	}
 }
+//时间信息
+void fun12(int argc, char *argv[]){
+	SYSTEMTIME st;
+	GetLocalTime(&st);//获取本地当前时间
+	printf("%d-%d-%d %d:%d:%d\n",
+		st.wYear, st.wMonth, st.wDay,
+		st.wHour, st.wMinute, st.wSecond);
+	//st.wHour--;
+	//SetLocalTime(&st);//设置当前时间
 
-void fun12(int argc, char *argv[]){}
+	DWORD c1 = GetTickCount();//获取开机到现在的时间
+	ULONGLONG c2 = GetTickCount64();//获取开机到现在的时间
+	printf("%d %lld\n", c1, c2);
+
+}
 void fun13(int argc, char *argv[]){}
 void fun14(int argc, char *argv[]){}
 void fun15(int argc, char *argv[]){}
