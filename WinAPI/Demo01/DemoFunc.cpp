@@ -379,7 +379,7 @@ void fun09(int argc, char *argv[]){
 	//	printf("属性设置失败：%d\n", GetLastError());
 	//}
 }
-//
+//系统信息
 void fun10(int argc, char *argv[]){
 	//********************获取系统版本信息
 	//OSVERSIONINFO ovex;
@@ -446,3 +446,50 @@ void fun10(int argc, char *argv[]){
 		break;
 	}
 }
+//系统信息
+void fun11(int argc, char *argv[]){
+	//系统目录
+	TCHAR szSystemDirectory[MAX_PATH];
+	GetSystemDirectory(szSystemDirectory, MAX_PATH);
+	printf("系统目录：%s\n", szSystemDirectory);
+
+	TCHAR szWindowsDirectory[MAX_PATH];
+	GetWindowsDirectory(szWindowsDirectory, MAX_PATH);
+	printf("Windows目录：%s\n", szWindowsDirectory);
+
+	TCHAR szComputerName[MAX_COMPUTERNAME_LENGTH+1];
+	DWORD dwComputerNameLength = MAX_COMPUTERNAME_LENGTH + 1;
+	GetComputerName(szComputerName, &dwComputerNameLength);
+	printf("计算机名：%s\n", szComputerName);
+
+	TCHAR szUserName[64];
+	DWORD dwUserNameLength = 64;
+	GetUserName(szUserName, &dwUserNameLength);
+	printf("用户名：%s\n", szUserName);
+
+	int aMouseInfo[3];
+	BOOL fResult = SystemParametersInfo(SPI_GETMOUSE, 0, aMouseInfo, 0);
+	if (fResult) {
+		aMouseInfo[2] = 2 * aMouseInfo[2];
+		SystemParametersInfo(SPI_SETMOUSE, 0, aMouseInfo, SPIF_SENDCHANGE);
+	}
+}
+
+void fun12(int argc, char *argv[]){}
+void fun13(int argc, char *argv[]){}
+void fun14(int argc, char *argv[]){}
+void fun15(int argc, char *argv[]){}
+void fun16(int argc, char *argv[]){}
+void fun17(int argc, char *argv[]){}
+void fun18(int argc, char *argv[]){}
+void fun19(int argc, char *argv[]){}
+void fun20(int argc, char *argv[]){}
+void fun21(int argc, char *argv[]){}
+void fun22(int argc, char *argv[]){}
+void fun23(int argc, char *argv[]){}
+void fun24(int argc, char *argv[]){}
+void fun25(int argc, char *argv[]){}
+void fun26(int argc, char *argv[]){}
+void fun27(int argc, char *argv[]){}
+void fun28(int argc, char *argv[]){}
+void fun29(int argc, char *argv[]){}

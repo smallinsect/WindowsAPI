@@ -53,6 +53,27 @@ Demo01
 		硬件信息
 		GetSystemInfo
 		SYSTEM_INFO
+	fun11
+		系统信息
+		计算机名 用户名 系统目录 windows目录 外设备
+	fun12
+	fun13
+	fun14
+	fun15
+	fun16
+	fun17
+	fun18
+	fun19
+	fun20
+	fun21
+	fun22
+	fun23
+	fun24
+	fun25
+	fun26
+	fun27
+	fun28
+	fun29
 
 
 
