@@ -62,6 +62,7 @@ Demo01
 			SetLocalTime 设置时间
 			GetTickCount 获取开机到现在，过了多长时间
 	fun13
+
 	fun14
 	fun15
 	fun16
@@ -110,9 +111,13 @@ DemoMFC04
 	4.从进程的地址空间撤销对文件数据的映射 UnmapViewOfFile
 	5.关闭文件映射对象 CloseHandle
 	6.关闭文件对象 CloseHandle
-
-
-
+DemoMFC05
+	注册表
+		RegCreateKey	RegCreateKeyEx
+		RegOpenKey		RegOpenKeyEx	
+		RegQueryValue	RegQueryValueEx
+		RegDeleteValue	RegDeleteValueEx
+		RegCloseKey		
 
 
 

@@ -489,7 +489,10 @@ void fun12(int argc, char *argv[]){
 	printf("%d %lld\n", c1, c2);
 
 }
-void fun13(int argc, char *argv[]){}
+//×¢²á±í
+void fun13(int argc, char *argv[]){
+
+}
 void fun14(int argc, char *argv[]){}
 void fun15(int argc, char *argv[]){}
 void fun16(int argc, char *argv[]){}
