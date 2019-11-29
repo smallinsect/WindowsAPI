@@ -84,9 +84,15 @@ Demo01
 
 DemoWin01
 	显示一个简单窗口
-
 DemoWin02
 	对话框资源创建窗口
+DemoWin03
+	按钮类控件
+	BM_SETCHECK BM_GETCHECK
+	SetWindowText GetWindowText
+	IsWindowVisible ShowWindow 
+	IsWindowEnabled EnableWindow
+
 
 DemoMFC01
 	使用MFC创建对话窗口
