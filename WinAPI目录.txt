@@ -92,6 +92,15 @@ DemoWin03
 	SetWindowText GetWindowText
 	IsWindowVisible ShowWindow 
 	IsWindowEnabled EnableWindow
+DemoWin04
+	编辑类空间
+	SetWindowText GetWindowText GetWindowTextLength
+	SendMessage(hwndEdit, WM_CUT, ...)
+	SendMessage(hwndEdit, WM_COPY, ...)
+	SendMessage(hwndEdit, WM_CLEAR, ...)
+	SendMessage(hwndEdit, WM_PASTE, ...)
+	SendMessage(hwndEdit, WM_GETSEL, ...)
+	SendMessage(hwndEdit, WM_SETSEL, ...)
 
 
 DemoMFC01
