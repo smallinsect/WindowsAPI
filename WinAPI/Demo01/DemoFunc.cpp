@@ -489,9 +489,41 @@ void fun12(int argc, char *argv[]){
 	printf("%d %lld\n", c1, c2);
 
 }
-//注册表
-void fun13(int argc, char *argv[]){
 
+BOOL CALLBACK EnumFamCallBack(LPLOGFONTA lplf,//逻辑字体
+	LPTEXTMETRICA lpntm,//物理字体
+	DWORD FontType,//字体类型
+	LPARAM aFontCount)//枚举函数传给回调函数的数据 
+{
+	PINT aiFontCount = (PINT)aFontCount;
+	if (FontType & RASTER_FONTTYPE) {
+		printf(" RASTER_FONTTYPE" );
+		aiFontCount[0]++;
+	}
+	else if (FontType & TRUETYPE_FONTTYPE) {
+		printf(" TRUETYPE_FONTTYPE");
+		aiFontCount[2]++;
+	}
+	else {
+		printf(" VECTORTYPE_FONTTYPE");
+		aiFontCount[1]++;
+	}
+	printf(" %s\tItalic = %d\n", lplf->lfFaceName, lplf->lfItalic);
+	return TRUE;
+}
+
+//枚举字体
+void fun13(int argc, char *argv[]){
+	HDC hdc = GetDC(NULL);//获取桌面HDC
+	//三种字体类型
+	int aFontCount[] = {0, 0, 0};
+	//NULL 枚举所有字体
+	EnumFontFamilies(hdc, NULL, (FONTENUMPROC)EnumFamCallBack, (LPARAM)aFontCount);//枚举所有字体
+
+	ReleaseDC(NULL, hdc);
+	printf("Number of raster fonts: %d\n", aFontCount[0]);
+	printf("Number of vector fonts: %d\n", aFontCount[1]);
+	printf("Number of TrueType fonts: %d\n", aFontCount[2]);
 }
 void fun14(int argc, char *argv[]){}
 void fun15(int argc, char *argv[]){}

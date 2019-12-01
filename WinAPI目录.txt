@@ -62,6 +62,9 @@ Demo01
 			SetLocalTime 设置时间
 			GetTickCount 获取开机到现在，过了多长时间
 	fun13
+		枚举字体
+			枚举函数 EnumFonts,EnumFontFamillies,EnumFontFamilliesEx
+			回调函数 BOOL CALLBACK EnumFamCallBack()
 
 	fun14
 	fun15
@@ -151,6 +154,7 @@ DemoWin14
 			LOGFONT 逻辑字节结构
 			CreaterFont
 			CreaterFontIndirect
+
 
 DemoMFC01
 	使用MFC创建对话窗口
