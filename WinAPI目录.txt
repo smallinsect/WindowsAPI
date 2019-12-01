@@ -143,7 +143,14 @@ DemoWin13
 		HFONT
 		ChooseFont
 		CreaterFontIndirect
-
+DemoWin14
+	字体
+		库存字体
+			GetStockObject(SYSTEM_FONT);
+		创建字体
+			LOGFONT 逻辑字节结构
+			CreaterFont
+			CreaterFontIndirect
 
 DemoMFC01
 	使用MFC创建对话窗口
