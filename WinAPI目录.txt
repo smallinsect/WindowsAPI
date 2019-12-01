@@ -114,6 +114,7 @@ DemoWin06
 	重置
 	项目的选择和提取
 	处理列表框的消息
+DemoWin07
 
 
 
@@ -147,6 +148,9 @@ DemoMFC05
 		RegQueryValue	RegQueryValueEx
 		RegDeleteValue	RegDeleteValueEx
 		RegCloseKey		
+DemoMFC06
+	一个最简单的GDI程序
+	DC GetDC ReleaseDC CreatePen CreateSolidBrush RGB SelectObject LineTo Rectangle
 
 
 
