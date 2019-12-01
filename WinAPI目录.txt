@@ -106,6 +106,16 @@ DemoWin05
 	发送消息 SendMessage SendDlgItemMessage
 	单选按钮分组 GroupBox Tab停靠和选项组
 	对话框上绘图
+DemoWin06
+	列表控件
+	添加字符串
+	删除字符串
+	排序
+	重置
+	项目的选择和提取
+	处理列表框的消息
+
+
 
 DemoMFC01
 	使用MFC创建对话窗口
