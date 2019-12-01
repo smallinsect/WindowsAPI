@@ -93,7 +93,7 @@ DemoWin03
 	IsWindowVisible ShowWindow 
 	IsWindowEnabled EnableWindow
 DemoWin04
-	编辑类空间
+	编辑类控件
 	SetWindowText GetWindowText GetWindowTextLength
 	SendMessage(hwndEdit, WM_CUT, ...)
 	SendMessage(hwndEdit, WM_COPY, ...)
@@ -101,7 +101,11 @@ DemoWin04
 	SendMessage(hwndEdit, WM_PASTE, ...)
 	SendMessage(hwndEdit, WM_GETSEL, ...)
 	SendMessage(hwndEdit, WM_SETSEL, ...)
-
+DemoWin05
+	单选按钮控件
+	发送消息 SendMessage SendDlgItemMessage
+	单选按钮分组 GroupBox Tab停靠和选项组
+	对话框上绘图
 
 DemoMFC01
 	使用MFC创建对话窗口
