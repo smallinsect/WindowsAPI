@@ -57,6 +57,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoWin18", "DemoWin18\Demo
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoWin19", "DemoWin19\DemoWin19.vcxproj", "{5440CB21-C611-495E-AB64-1C9E34A9400C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoDll01", "DemoDll01\DemoDll01.vcxproj", "{8C628AFD-1E53-4C92-9AE5-798A07FF2D50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -281,6 +283,14 @@ Global
 		{5440CB21-C611-495E-AB64-1C9E34A9400C}.Release|x64.Build.0 = Release|x64
 		{5440CB21-C611-495E-AB64-1C9E34A9400C}.Release|x86.ActiveCfg = Release|Win32
 		{5440CB21-C611-495E-AB64-1C9E34A9400C}.Release|x86.Build.0 = Release|Win32
+		{8C628AFD-1E53-4C92-9AE5-798A07FF2D50}.Debug|x64.ActiveCfg = Debug|x64
+		{8C628AFD-1E53-4C92-9AE5-798A07FF2D50}.Debug|x64.Build.0 = Debug|x64
+		{8C628AFD-1E53-4C92-9AE5-798A07FF2D50}.Debug|x86.ActiveCfg = Debug|Win32
+		{8C628AFD-1E53-4C92-9AE5-798A07FF2D50}.Debug|x86.Build.0 = Debug|Win32
+		{8C628AFD-1E53-4C92-9AE5-798A07FF2D50}.Release|x64.ActiveCfg = Release|x64
+		{8C628AFD-1E53-4C92-9AE5-798A07FF2D50}.Release|x64.Build.0 = Release|x64
+		{8C628AFD-1E53-4C92-9AE5-798A07FF2D50}.Release|x86.ActiveCfg = Release|Win32
+		{8C628AFD-1E53-4C92-9AE5-798A07FF2D50}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
