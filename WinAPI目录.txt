@@ -1,3 +1,5 @@
+﻿https://www.bilibili.com/video/av65678855/
+
 Demo01
 	fun01
 		GetSystemDirectory 获取系统文件目录
@@ -250,6 +252,24 @@ DemoDll01
 	启动时加载DLL:使用h文件和lib文件
 	运行时加载DLL：使用LoadLibrary(),GetProcessAddress()
 
-
-
-
+DemoService01
+	编写服务程序
+	服务主函数
+		ServiceMain()
+		StartServiceCtrlDispatcher()
+	服务控制处理函数
+		ServiceCtrlHandler()
+		RegisterServiceCtrlHandler()
+	Windows工具
+		sc.exe
+binPath= 添加完整的路径（绝对路径）否则 系统找不到指定文件
+创建服务 sc create 服务名 binPath= e:\DemoService01.exe
+启动服务 sc start 服务名
+查询服务 sc query 服务名
+删除服务 sc delete 服务名
+停止服务 sc stop 服务名
+配置服务：
+sc config 服务名 start= demand //手动
+sc condig 服务名 start= auto //自动
+sc config 服务名 start= disabled //禁用
+		

@@ -1,5 +1,9 @@
 # WindowsAPI
-输出目录
+杈撳嚭鐩綍
 $(SolutionDir)..\bin\$(Platform)\$(Configuration)\
-中检目录
+涓鐩綍
 $(SolutionDir)..\bintemp\$(Platform)\$(ProjectName)\$(Configuration)\
+
+瀛︿範瑙嗛缃戝潃
+https://www.bilibili.com/video/av65678855/
+
