@@ -262,14 +262,20 @@ DemoService01
 		RegisterServiceCtrlHandler()
 	Windows工具
 		sc.exe
-binPath= 添加完整的路径（绝对路径）否则 系统找不到指定文件
-创建服务 sc create 服务名 binPath= e:\DemoService01.exe
-启动服务 sc start 服务名
-查询服务 sc query 服务名
-删除服务 sc delete 服务名
-停止服务 sc stop 服务名
-配置服务：
-sc config 服务名 start= demand //手动
-sc condig 服务名 start= auto //自动
-sc config 服务名 start= disabled //禁用
-		
+		binPath= 添加完整的路径（绝对路径）否则 系统找不到指定文件
+		创建服务 sc create 服务名 binPath= e:\DemoService01.exe
+		启动服务 sc start 服务名
+		查询服务 sc query 服务名
+		删除服务 sc delete 服务名
+		停止服务 sc stop 服务名
+		配置服务：
+		sc config 服务名 start= demand //手动
+		sc condig 服务名 start= auto //自动
+		sc config 服务名 start= disabled //禁用
+DemoService02
+	编写服务安装和删除程序
+		OpenSCManager()
+		CreateService()
+		DeleteService()
+	Windows工具
+		sc.exe
