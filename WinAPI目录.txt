@@ -83,12 +83,40 @@ Demo01
 			CreateToolHelp32Snapshot(TH32CS_SNAPPROCESS, 0)
 			Process32First()
 			Process32Next()
-		通过psapi.dll中的函数进行枚举
-		通过ntdll.dll中的函数进行枚举
-		通过wtsapi32.dll中的函数进行枚举
 	fun16
+		#include <Psapi.h>
+		通过psapi.dll中的函数进行枚举
+			EnumProcess();
+			EnumProcessModules();
+			GetModuleFileNameEx();
 	fun17
-	fun18
+		#include <WtsApi32.h>
+		#pragma comment(lib, "WtsApi32.lib")
+		Windows Terminate Service终端服务
+		通过wtsapi32.dll中的函数进行枚举
+			WTSOpenServer();
+			WTSEnumerateProcess();
+			WTSCloseServer();
+				//终端服务进程信息
+		PWTS_PROCESS_INFO pProcessInfo;
+		//进程个数
+		DWORD dwCount;
+		//if (!WTSEnumerateProcesses(hWtsServer, 0, 1, &pProcessInfo, &dwCount)) {
+		if (!WTSEnumerateProcesses(WTS_CURRENT_SERVER_HANDLE, 0, 1, &pProcessInfo, &dwCount)) {
+			printf("WTSEnumerateProcesses 失败\n");
+			return;
+		}
+		//枚举所有进程的信息
+		for (DWORD i = 0; i < dwCount; ++i) {
+			printf("PID:%d\t名称:%s\n", pProcessInfo[i].ProcessId, pProcessInfo[i].pProcessName);
+		}
+		//内存泄漏就是从这里来的，好多人要忘记这里
+		WTSFreeMemory(pProcessInfo);
+	fun18 /?????????????????????????????
+		通过ntdll.dll中的函数进行枚举
+		ZwQuerySystemInformation
+		
+		
 	fun19
 	fun20
 	fun21

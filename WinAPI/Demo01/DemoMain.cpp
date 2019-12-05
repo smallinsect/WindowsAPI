@@ -17,9 +17,9 @@ int main(int argc, char *argv[]) {
 	//fun12( argc, argv);
 	//fun13( argc, argv);
 	//fun14( argc, argv);
-	fun15( argc, argv);
-	fun16( argc, argv);
-	fun17( argc, argv);
+	//fun15( argc, argv);
+	//fun16( argc, argv);
+	//fun17( argc, argv);
 	fun18( argc, argv);
 	fun19( argc, argv);
 	fun20( argc, argv);

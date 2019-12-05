@@ -6,6 +6,11 @@
 #include <stdio.h>
 #include <windows.h>
 #include <TlHelp32.h>
+#include <Psapi.h>
+#include <WtsApi32.h>
+#include <NTSecAPI.h>
+
+
 
 
 #define BUFSIZE 1024

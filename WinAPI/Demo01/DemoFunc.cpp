@@ -605,9 +605,157 @@ void fun15(int argc, char *argv[]){
 	//关闭句柄
 	CloseHandle(hSnapshot);
 }
-void fun16(int argc, char *argv[]){}
-void fun17(int argc, char *argv[]){}
-void fun18(int argc, char *argv[]){}
+
+BOOL UpdateProcessPrivilege(HANDLE hProcess, LPCTSTR lpRivilegeName = SE_DEBUG_NAME);
+
+//#pragma comment(lib, "psapi.lib")
+//枚举进程中的所有
+void fun16(int argc, char *argv[]) {
+	//提升当前进程的权限
+	UpdateProcessPrivilege(GetCurrentProcess());
+
+	DWORD PID[1024];//保存所有进程的ID
+	DWORD cbNeeded;//系统当前实际进程数量
+	//获取所有进程的ID
+	if (!EnumProcesses(PID, sizeof(PID), &cbNeeded)) {
+		printf("获取所有进程ID失败\n");
+		return;
+	}
+	DWORD processcount = cbNeeded / sizeof(DWORD);//计算进程个数
+	printf("当前共有%d个进程\n", processcount);
+	HANDLE hProcess;
+	HMODULE hModules[1024];//模块
+	for (DWORD i = 0; i < processcount; ++i) {
+		hProcess = OpenProcess(
+			PROCESS_QUERY_INFORMATION|PROCESS_VM_READ,//打开进程 查询信息 读取信息
+			FALSE,
+			PID[i]);
+		if (hProcess) {
+			printf("PID: %d\n", PID[i]);
+			if (EnumProcessModules(hProcess, hModules, sizeof(hModules), &cbNeeded)) {
+				for (int j = 0; j < (cbNeeded / sizeof(HMODULE)); ++j) {
+					TCHAR szFilename[MAX_PATH];
+					DWORD nSize;
+					if (GetModuleFileNameEx(hProcess, hModules[j], szFilename, MAX_PATH)) {
+						printf("\t%d %s (0x%08x)\n", j, szFilename, hModules[j]);
+					}
+				}
+			}
+			else {
+				printf("模块打开失败\n");
+			}
+		}
+		else {
+			printf("PID: %d 打开进程失败\n", PID[i]);
+		}
+		CloseHandle(hProcess);
+	}
+
+}
+//提升进程权限
+BOOL UpdateProcessPrivilege(HANDLE hProcess, LPCTSTR lpRivilegeName) {
+	HANDLE hToken;
+	TOKEN_PRIVILEGES TokenPrivileges;
+	if (OpenProcessToken(hProcess, TOKEN_ALL_ACCESS, &hToken)) {
+		printf("OpenProcessToken 成功\n");
+		LUID destLuid;
+		if (LookupPrivilegeValue(NULL, lpRivilegeName, &destLuid)) {
+			printf("LookupPrivilegeValue 成功\n");
+			TokenPrivileges.PrivilegeCount = 1;
+			TokenPrivileges.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
+			TokenPrivileges.Privileges[0].Luid = destLuid;
+			if (AdjustTokenPrivileges(hToken, FALSE, &TokenPrivileges,0,NULL,NULL)) {
+				printf("AdjustTokenPrivileges 成功\n");
+				return TRUE;
+			}
+		}
+	}
+	return FALSE;
+}
+
+//windows终端服务 
+//windows terminate server
+//#include <WtsApi32.h>
+#pragma comment(lib, "WtsApi32.lib")
+void fun17(int argc, char *argv[]){
+	////计算机名
+	//TCHAR szServerName[32] = TEXT("DESKTOP-45J0D6P");
+	////把这台计算机当服务打开
+	//HANDLE hWtsServer = WTSOpenServer(szServerName);
+	//if (hWtsServer == INVALID_HANDLE_VALUE) {
+	//	printf("WTSOpenServer 失败\n");
+	//	return;
+	//}
+	//终端服务进程信息
+	PWTS_PROCESS_INFO pProcessInfo;
+	//进程个数
+	DWORD dwCount;
+	//if (!WTSEnumerateProcesses(hWtsServer, 0, 1, &pProcessInfo, &dwCount)) {
+	if (!WTSEnumerateProcesses(WTS_CURRENT_SERVER_HANDLE, 0, 1, &pProcessInfo, &dwCount)) {
+		printf("WTSEnumerateProcesses 失败\n");
+		return;
+	}
+	//枚举所有进程的信息
+	for (DWORD i = 0; i < dwCount; ++i) {
+		printf("PID:%d\t名称:%s\n", pProcessInfo[i].ProcessId, pProcessInfo[i].pProcessName);
+	}
+	//内存释放
+	WTSFreeMemory(pProcessInfo);
+	//关闭服务
+	//WTSCloseServer(hWtsServer);
+}
+
+typedef DWORD(WINAPI *ZWQUERYSYSTEMINFORMATION)(DWORD, PVOID, DWORD, PDWORD);
+#define SystemProcessesAndThreadsInformation 5
+typedef struct _SYSTEM_PRCESS_INFORMATION {
+	DWORD			NextEntryDelta;
+	DWORD			ThreadCount;
+	DWORD			Reservedl[6];
+	FILETIME		ftCreateTime;
+	FILETIME		ftUserTime;
+	FILETIME		ftKernelTime;
+	UNICODE_STRING	ProcessName;
+	DWORD			BasePriority;
+	DWORD			ProcessId;
+	DWORD			InheritedFromProcessId;
+	DWORD			HandleCount;
+	DWORD			Reserved2[2];
+	DWORD			VmCounters;
+	DWORD			dCommintCharge;
+	DWORD			ThreadInfos[1];
+} SYSTEM_PRCESS_INFORMATION, *PSYSTEM_PRCESS_INFORMATION;
+//枚举进程信息
+void fun18(int argc, char *argv[]){
+	HMODULE hNtDll = GetModuleHandle(TEXT("ntdll.dll"));
+	if (!hNtDll) {
+		printf("GetModuleHandle 失败\n");
+		return;
+	}
+	ZWQUERYSYSTEMINFORMATION ZwQuerySystemInformation = (ZWQUERYSYSTEMINFORMATION)GetProcAddress(hNtDll, TEXT("ZwQuerySystemInformation"));
+	if (ZwQuerySystemInformation == NULL) {
+		printf("GetProcAddress 失败\n");
+		return;
+	}
+
+	ULONG cbBuffer = 0x10000;
+	LPVOID pBuffer = malloc(cbBuffer);
+	if (pBuffer == NULL) {
+		printf("malloc 失败\n");
+		return;
+	}
+
+	ZwQuerySystemInformation(SystemProcessesAndThreadsInformation, pBuffer, cbBuffer, NULL);
+	//进程信息结构 pInfo = (进程信息结构)pBuffer;
+	PSYSTEM_PRCESS_INFORMATION pInfo = (PSYSTEM_PRCESS_INFORMATION)cbBuffer;
+	while (true) {
+		printf("PID:%d\t名称:%ls\n", pInfo->ProcessId, pInfo->ProcessName);
+		if (pInfo->NextEntryDelta == 0) {
+			break;
+		}
+		pInfo = (PSYSTEM_PRCESS_INFORMATION)(((PUCHAR)pInfo) + pInfo->NextEntryDelta);
+	}
+	free(pBuffer);
+}
 void fun19(int argc, char *argv[]){}
 void fun20(int argc, char *argv[]){}
 void fun21(int argc, char *argv[]){}
