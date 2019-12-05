@@ -336,9 +336,16 @@ DemoMFC10
 		GetCommandLine() 获取进程接受的命令行参数
 		GetCurrentProcessId 当前进程ID
 DemoMFC11
-
-
-
+	传递最简单的数据 整形
+	发送消息
+	系统消息和用户信息（自定义消息）
+		0x000~0x3FF
+		0x400
+	自定义消息的两种方法
+		WM_USER
+		RegisterWindowsMessage()
+DemoMFC12
+	接受消息
 
 
 
