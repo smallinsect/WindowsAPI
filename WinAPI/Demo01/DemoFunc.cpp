@@ -525,7 +525,64 @@ void fun13(int argc, char *argv[]){
 	printf("Number of vector fonts: %d\n", aFontCount[1]);
 	printf("Number of TrueType fonts: %d\n", aFontCount[2]);
 }
-void fun14(int argc, char *argv[]){}
+//环境变量
+void fun14(int argc, char *argv[]){
+	if (argc == 2 && lstrcmp(argv[1], "showall")) {
+		//环境变量格式
+		//=::=::\\0ALLUSERSPROFILE=C:\ProgramData\0....
+		//获取环境所有环境变量
+		LPCH pEv = GetEnvironmentStrings();
+		LPTSTR szEnvs = (LPTSTR)pEv;
+		while (*szEnvs) {
+			printf("%s\n", szEnvs);
+			//找到下一个变量
+			szEnvs = szEnvs + lstrlen(szEnvs) + 1;
+			//while (*szEnvs++) {}//找到下一个变量
+		}
+		//释放指针
+		FreeEnvironmentStrings(pEv);
+	}
+	else if (argc == 2 && lstrcmp(argv[1], "addnew")) {
+		//当前程序环境变量 添加，用户环境变量和系统环境变量不会影响
+		if (!SetEnvironmentVariable("a", "b")) {
+			printf("添加失败 %d\n", GetLastError());
+		}
+		else {
+			printf("添加成功\n");
+		}
+	}
+	else if (argc == 2 && lstrcmp(argv[1], "delete")) {
+		if (!SetEnvironmentVariable("a", NULL)) {
+			printf("添加失败 %d\n", GetLastError());
+		}
+		else {
+			printf("添加成功\n");
+		}
+	}
+	else if (argc == 2 && lstrcmp(argv[1], "set")) {
+		if (!SetEnvironmentVariable("a", "big")) {
+			printf("添加失败 %d\n", GetLastError());
+		}
+		else {
+			printf("添加成功\n");
+		}
+	}
+	else if (argc == 2 && lstrcmp(argv[1], "get")) {
+		TCHAR buf[1024];
+		if (!GetEnvironmentVariable("a", buf, 1024)) {
+			DWORD dwErr = GetLastError();
+			if (dwErr == ERROR_ENVVAR_NOT_FOUND) {
+				printf("环境变量不存在\n");
+			}
+			printf("添加失败 %d\n", dwErr);
+		}
+		else {
+			printf("添加成功\n");
+		}
+	}
+
+
+}
 void fun15(int argc, char *argv[]){}
 void fun16(int argc, char *argv[]){}
 void fun17(int argc, char *argv[]){}

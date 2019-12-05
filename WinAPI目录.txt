@@ -67,8 +67,14 @@ Demo01
 		枚举字体
 			枚举函数 EnumFonts,EnumFontFamillies,EnumFontFamilliesEx
 			回调函数 BOOL CALLBACK EnumFamCallBack()
-
 	fun14
+		环境变量 进程修改的环境变量，自己能看到，系统环境变量和用户环境变量，不会改变。
+			GetEnironmentStrings
+			GetEnironmentVariable
+			SetEnironmentVariable
+		子进程继承父进程的环境变量
+			进程中创建子进程，进程中修改的环境变量，子进程可以访问。
+			可以用环境变量方式，是父进程和子进程通信
 	fun15
 	fun16
 	fun17
@@ -291,9 +297,7 @@ DemoMFC10
 		PROCESS_INFORMATION 进程信息
 		GetCommandLine() 获取进程接受的命令行参数
 		GetCurrentProcessId 当前进程ID
-
-
-
+DemoMFC11
 
 
 
