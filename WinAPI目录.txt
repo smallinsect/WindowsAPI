@@ -247,7 +247,11 @@ DemoMFC07
 		AfxBeginThread()
 	线程函数
 		typedef UINT (AFX_CDECL *AFX_THREADPROC)(LPVOID);
-
+DemoMFC08
+	线程控制
+		暂停 pthread->SuspendThread()
+		继续 pthread->ResumeThread()
+		终止 bRunning = FALSE
 
 DemoDll01
 	编写一个动态库文件
