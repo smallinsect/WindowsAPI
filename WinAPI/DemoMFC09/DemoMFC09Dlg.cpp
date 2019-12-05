@@ -12,6 +12,15 @@
 #endif
 
 
+//临界区对象
+CCriticalSection* g_pCS;
+//互斥量对象
+CMutex* g_pMutex;
+//信号量
+CSemaphore* g_pSemaphore;
+//事件
+CEvent* g_pEvent;
+
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
 class CAboutDlg : public CDialogEx
@@ -53,7 +62,31 @@ CDemoMFC09Dlg::CDemoMFC09Dlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DEMOMFC09_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	//创建临界区对象
+	g_pCS = new CCriticalSection();
+	//创建互斥量
+	g_pMutex = new CMutex();
+	//信号量
+	g_pSemaphore = new CSemaphore(1, 1);
+	//事件
+	g_pEvent = new CEvent(TRUE);
+
 }
+CDemoMFC09Dlg::~CDemoMFC09Dlg() {
+	//释放临界区对象
+	delete g_pCS;
+	g_pCS = NULL;
+	//释放互斥量
+	delete g_pMutex;
+	g_pMutex = NULL;
+	//释放信号量
+	delete g_pSemaphore;
+	g_pSemaphore = NULL;
+	//释放信号量
+	delete g_pEvent;
+	g_pEvent = NULL;
+}
+
 
 void CDemoMFC09Dlg::DoDataExchange(CDataExchange* pDX)
 {
@@ -154,21 +187,66 @@ HCURSOR CDemoMFC09Dlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-#define MAX_NUM 100000000
+#define MAX_NUM 1000000
 int k = 1;
 int total = 0;
+
 
 UINT ThreadProcA(LPVOID pParam) {
 	::SetDlgItemText(AfxGetApp()->m_pMainWnd->m_hWnd,
 		IDC_OUTPUTA, TEXT("线程A启动"));
+	//临界区
+	//for (int i = 1; i <= MAX_NUM; ++i) {
+	//	//加锁
+	//	g_pCS->Lock();
+	//	k = k * 2;
+	//	k = k / 2;
+	//	total += k;
+	//	//解锁
+	//	g_pCS->Unlock();
+	//}
+	//互斥量
+	//CSingleLock singleLock(g_pMutex);
+	//for (int i = 1; i <= MAX_NUM; ++i) {
+	//	//加锁
+	//	singleLock.Lock();
+	//	if (singleLock.IsLocked()) {//如果锁住了，就执行
+	//		k = k * 2;
+	//		k = k / 2;
+	//		total += k;
+	//		//解锁
+	//		singleLock.Unlock();
+	//	}
+	//}
+	//信号量
+	//CSingleLock singleLock(g_pSemaphore);
+	//for (int i = 1; i <= MAX_NUM; ++i) {
+	//	//加锁
+	//	singleLock.Lock();
+	//	if (singleLock.IsLocked()) {//如果锁住了，就执行
+	//		k = k * 2;
+	//		k = k / 2;
+	//		total += k;
+	//		//解锁
+	//		singleLock.Unlock();
+	//	}
+	//}
+
+
+	//事件
+	CSingleLock singleLock(g_pEvent);
 	for (int i = 1; i <= MAX_NUM; ++i) {
 		//加锁
-		k = k * 2;
-		k = k / 2;
-		total += k;
-		//解锁
+		singleLock.Lock();
+		if (singleLock.IsLocked()) {//如果锁住了，就执行
+			k = k * 2;
+			k = k / 2;
+			total += k;
+			//解锁
+			singleLock.Unlock();
+			g_pEvent->SetEvent();//发信号给其他线程
+		}
 	}
-
 	::SetDlgItemInt(AfxGetApp()->m_pMainWnd->m_hWnd,
 		IDC_OUTPUT, total, false);
 	return 0;
@@ -176,14 +254,59 @@ UINT ThreadProcA(LPVOID pParam) {
 UINT ThreadProcB(LPVOID pParam) {
 	::SetDlgItemText(AfxGetApp()->m_pMainWnd->m_hWnd,
 		IDC_OUTPUTB, TEXT("线程B启动"));
+	//临界区
+	//for (int j = 1; j <= MAX_NUM; ++j) {
+	//	//加锁
+	//	g_pCS->Lock();
+	//	k = k * 2;
+	//	k = k / 2;
+	//	total += k;
+	//	//解锁
+	//	g_pCS->Unlock();
+	//}
+
+	//互斥量
+	//CSingleLock singleLock(g_pMutex);
+	//for (int j = 1; j <= MAX_NUM; ++j) {
+	//	//加锁
+	//	singleLock.Lock();
+	//	if (singleLock.IsLocked()) {//如果锁住，就执行
+	//		k = k * 2;
+	//		k = k / 2;
+	//		total += k;
+	//		//解锁
+	//		singleLock.Unlock();
+	//	}
+	//}
+
+	//信号量
+	//CSingleLock singleLock(g_pSemaphore);
+	//for (int j = 1; j <= MAX_NUM; ++j) {
+	//	//加锁
+	//	singleLock.Lock();
+	//	if (singleLock.IsLocked()) {//如果锁住，就执行
+	//		k = k * 2;
+	//		k = k / 2;
+	//		total += k;
+	//		//解锁
+	//		singleLock.Unlock();
+	//	}
+	//}
+
+	//事件
+	CSingleLock singleLock(g_pEvent); 
 	for (int j = 1; j <= MAX_NUM; ++j) {
 		//加锁
-		k = k * 2;
-		k = k / 2;
-		total += k;
-		//解锁
+		singleLock.Lock();
+		if (singleLock.IsLocked()) {//如果锁住，就执行
+			k = k * 2;
+			k = k / 2;
+			total += k;
+			//解锁
+			singleLock.Unlock();
+			g_pEvent->SetEvent();//发信号给其他线程
+		}
 	}
-
 	::SetDlgItemInt(AfxGetApp()->m_pMainWnd->m_hWnd,
 		IDC_OUTPUT, total, false);
 	return 0;

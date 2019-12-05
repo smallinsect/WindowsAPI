@@ -11,6 +11,7 @@ class CDemoMFC09Dlg : public CDialogEx
 // 构造
 public:
 	CDemoMFC09Dlg(CWnd* pParent = nullptr);	// 标准构造函数
+	~CDemoMFC09Dlg();
 
 // 对话框数据
 #ifdef AFX_DESIGN_TIME

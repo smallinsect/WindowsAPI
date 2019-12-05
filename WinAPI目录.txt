@@ -254,10 +254,35 @@ DemoMFC08
 		终止 bRunning = FALSE
 DemoMFC09
 	线程的同步 线程同步方法
-		临界区
-		互斥量
-		信号量
-		事件
+		临界区 CCriticalSection *g_pCS;
+			g_pCS->Lock();//加锁
+			g_pCS->Unlock();//解锁
+		互斥量 CMutex *g_pMutex;
+			CSingleLock singleLock(g_pMutex); 
+			singleLock.Lock();//加锁
+			if(singleLock.IsLocked()){//如果锁住 就执行
+				...
+				//解锁
+				singleLock.Unlock();
+			}
+		信号量 CSemaphore* g_pSemaphore = new CSemaphore(1, 1);
+			CSingleLock singleLock(g_pSemaphore); 
+			singleLock.Lock();//加锁
+			if(singleLock.IsLocked()){//如果锁住 就执行
+				...
+				//解锁
+				singleLock.Unlock();
+			}
+		事件 CEvent* pEvent = new CEvent(TRUE);
+			CSingleLock singleLock(pEvent); 
+			singleLock.Lock();//加锁
+			if(singleLock.IsLocked()){//如果锁住 就执行
+				...
+				//解锁
+				singleLock.Unlock();
+				g_pEvent->SetEvent();//发信号给其他线程
+			}
+
 
 
 
