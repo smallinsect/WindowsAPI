@@ -252,6 +252,19 @@ DemoMFC08
 		暂停 pthread->SuspendThread()
 		继续 pthread->ResumeThread()
 		终止 bRunning = FALSE
+DemoMFC09
+	线程的同步 线程同步方法
+		临界区
+		互斥量
+		信号量
+		事件
+
+
+
+
+
+
+
 
 DemoDll01
 	编写一个动态库文件
