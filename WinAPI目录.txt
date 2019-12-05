@@ -347,7 +347,18 @@ DemoMFC11
 DemoMFC12
 	接受消息
 
-
+DemoMFC13
+	发送数据
+	进程间通信-数据复制消息
+		消息 WM_COPYDATA
+		结构
+		typedef struct tagCOPYDATASTRUCT{
+			ULONG_PTR dwData;
+			DWORD cbData;
+			PVOID lpData;
+		} COPYDATASTRUCT, *PCOPYDATASTRUCT;
+DemoMFC14
+	接受数据
 
 DemoDll01
 	编写一个动态库文件
