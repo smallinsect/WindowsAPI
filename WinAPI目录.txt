@@ -282,6 +282,15 @@ DemoMFC09
 				singleLock.Unlock();
 				g_pEvent->SetEvent();//发信号给其他线程
 			}
+DemoMFC10
+	创建进程
+		CreateProcess 创建进程
+		ExitProcess 自己退出
+		TerminateProcess 自己终止别的进程
+		STARTUPINFO 进程启动信息
+		PROCESS_INFORMATION 进程信息
+		GetCommandLine() 获取进程接受的命令行参数
+		GetCurrentProcessId 当前进程ID
 
 
 
