@@ -76,6 +76,16 @@ Demo01
 			进程中创建子进程，进程中修改的环境变量，子进程可以访问。
 			可以用环境变量方式，是父进程和子进程通信
 	fun15
+		工具帮助函数 Tool Help
+		#include <TlHelp32.h>
+		枚举系统中正在运行的进程
+		通过系统快照进行枚举
+			CreateToolHelp32Snapshot(TH32CS_SNAPPROCESS, 0)
+			Process32First()
+			Process32Next()
+		通过psapi.dll中的函数进行枚举
+		通过ntdll.dll中的函数进行枚举
+		通过wtsapi32.dll中的函数进行枚举
 	fun16
 	fun17
 	fun18

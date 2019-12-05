@@ -583,7 +583,28 @@ void fun14(int argc, char *argv[]){
 
 
 }
-void fun15(int argc, char *argv[]){}
+//枚举系统中的进程
+void fun15(int argc, char *argv[]){
+	//创建进程快照
+	HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+	if (hSnapshot == INVALID_HANDLE_VALUE) {
+		printf("进程快照失败\n");
+		return ;
+	}
+	//进程信息
+	PROCESSENTRY32 pe = {0};
+	pe.dwSize = sizeof(pe);
+	//查找第一个进程
+	BOOL bRet = Process32First(hSnapshot, &pe);
+	while(bRet) {
+		//打印进程ID和进程的名称
+		printf("PID:%d\t名称:%s\n", pe.th32ProcessID, pe.szExeFile);
+		//查找下一个进程
+		bRet = Process32Next(hSnapshot, &pe);
+	}
+	//关闭句柄
+	CloseHandle(hSnapshot);
+}
 void fun16(int argc, char *argv[]){}
 void fun17(int argc, char *argv[]){}
 void fun18(int argc, char *argv[]){}

@@ -5,6 +5,7 @@
 #include <locale.h>
 #include <stdio.h>
 #include <windows.h>
+#include <TlHelp32.h>
 
 
 #define BUFSIZE 1024
