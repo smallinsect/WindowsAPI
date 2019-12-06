@@ -1,4 +1,4 @@
-﻿https://www.bilibili.com/video/av65678855/
+https://www.bilibili.com/video/av65678855/
 
 Demo01
 	fun01
@@ -359,6 +359,27 @@ DemoMFC13
 		} COPYDATASTRUCT, *PCOPYDATASTRUCT;
 DemoMFC14
 	接受数据
+DemoMFC15
+	发送数据
+	进程间通信-剪贴板
+		剪贴板函数 
+			OpenClipboard()、CloseClipboard()
+			SetClipboardData()、GetClipboardData()
+		内存分配函数
+			GlobalAlloc()、GlobalLock()、GlobalUnlock()
+		进程->剪贴板->进程
+DemoMFC16
+	接受数据
+
+
+
+
+
+
+
+
+
+
 
 DemoDll01
 	编写一个动态库文件
