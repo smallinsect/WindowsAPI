@@ -1,5 +1,17 @@
 https://www.bilibili.com/video/av65678855/
 
+
+程序的内存分配
+	程序代码区
+	文字常量区 "打发的撒" 
+	全局区/静态区 全局变量 static变量
+	栈区 函数内 非静态成员
+	堆区 malloc
+
+	每个进程都有默认堆
+	也可以自己创建堆 HeapCreate HeapAlloc
+
+
 Demo01
 	fun01
 		GetSystemDirectory 获取系统文件目录
@@ -283,6 +295,12 @@ DemoWin22
 		页面文件
 		WorkingSet
 		PrivateBytes
+DemoWin23
+	ENVIRON
+		对话框窗口、列表框控件、静态文件控件
+		环境变量
+		堆
+			malloc、calloc、HeapAlloc、HeapFree
 
 DemoMFC01
 	使用MFC创建对话窗口
