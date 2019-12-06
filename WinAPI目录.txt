@@ -258,6 +258,21 @@ DemoWin20
 		_beginthread()
 	线程函数
 		void _cdecl ThreadProc(void *pParam)
+DemoWin21
+	系统信息
+		内存
+			内存页面大小
+			内存分配粒度
+			进程最小内存地址
+			进程最大内存地址
+		CPU
+			CPU数量
+			CPU活动状态掩码
+			CPU体系结构
+	0x00000000 - 0x0000ffff 空指针赋值分区
+	0x00010000 - 0x7ffeffff 用户模式分区
+	0x7fff0000 - 0x7fffffff 64KB禁入分区
+	0x80000000 - 0xffffffff 内核模式分区
 
 
 DemoMFC01
@@ -447,8 +462,6 @@ DemoMFC20 服务端 邮槽传递数据最多424字节大小数据
 		WriteFile()、ReadFile()
 DemoMFC21 客户端
 	进程通信-邮槽
-
-
 
 
 
