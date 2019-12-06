@@ -888,7 +888,59 @@ void fun20(int argc, char *argv[]){
 	}
 	//进程堆 不能销毁
 }
-void fun21(int argc, char *argv[]){}
+
+#define MEM_BLOCK_SIZE 32
+
+BOOL ShowMemContent(LPVOID lpMem, SIZE_T dwSize) {
+	if (dwSize > MEM_BLOCK_SIZE) {
+		printf("dwSize > %d\n", MEM_BLOCK_SIZE);
+		return FALSE;
+	}
+	BYTE lpShow[MEM_BLOCK_SIZE];
+	CopyMemory((LPVOID)lpShow, lpMem, dwSize);
+	for (int i = 0; i < dwSize; ++i) {
+		if ((i % 16) == 0) {
+			printf("\n");
+		}
+		printf("%.2X ", lpShow[i]);
+	}
+	printf("\n");
+	return TRUE;
+}
+//内存基本操作
+void fun21(int argc, char *argv[]){
+	HANDLE hHeap = GetProcessHeap();
+	//创建内存
+	LPVOID lpMem1 = HeapAlloc(hHeap, 0, MEM_BLOCK_SIZE);
+	puts("====================lpMem1");
+	ShowMemContent(lpMem1, MEM_BLOCK_SIZE);
+	//创建内存
+	LPVOID lpMem2 = HeapAlloc(hHeap, HEAP_ZERO_MEMORY, MEM_BLOCK_SIZE);
+	puts("====================lpMem2");
+	ShowMemContent(lpMem2, MEM_BLOCK_SIZE);
+	//将lpMem1内存的数据清零
+	ZeroMemory(lpMem1, MEM_BLOCK_SIZE);
+	puts("====================lpMem1");
+	ShowMemContent(lpMem1, MEM_BLOCK_SIZE);
+	//将lpMem1内存的数据填充0xAA
+	FillMemory(lpMem1, MEM_BLOCK_SIZE, 0xAA);
+	puts("====================lpMem1");
+	ShowMemContent(lpMem1, MEM_BLOCK_SIZE);
+	//填充一部分
+	FillMemory(lpMem1, MEM_BLOCK_SIZE/2, 0xBB);
+	puts("====================lpMem1");
+	ShowMemContent(lpMem1, MEM_BLOCK_SIZE);
+	//将第一块内存数据移动到第二块内存中
+	MoveMemory(lpMem2, lpMem1, MEM_BLOCK_SIZE);
+	puts("====================lpMem2");
+	ShowMemContent(lpMem2, MEM_BLOCK_SIZE);
+	//两块内存不能重叠 和MoveMemory一样
+	//CopyMemory(lpMem2, lpMem1, MEM_BLOCK_SIZE);
+
+	//释放内存
+	HeapFree(hHeap, 0, lpMem1);
+	HeapFree(hHeap, 0, lpMem2);
+}
 void fun22(int argc, char *argv[]){}
 void fun23(int argc, char *argv[]){}
 void fun24(int argc, char *argv[]){}

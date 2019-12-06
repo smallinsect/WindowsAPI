@@ -149,6 +149,11 @@ Demo01
 			GetProcessHeap
 			GetProcessHeaps
 	fun21
+		内存基本操作
+			ZeroMemory
+			FillMemory
+			CopyMemory
+			MoveMemory
 	fun22
 	fun23
 	fun24
@@ -157,6 +162,7 @@ Demo01
 	fun27
 	fun28
 	fun29
+
 
 
 
