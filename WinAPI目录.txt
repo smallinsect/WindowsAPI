@@ -273,7 +273,16 @@ DemoWin21
 	0x00010000 - 0x7ffeffff 用户模式分区
 	0x7fff0000 - 0x7fffffff 64KB禁入分区
 	0x80000000 - 0xffffffff 内核模式分区
-
+DemoWin22
+	虚拟内存状态
+		GlobalMemoryStatus MEMORYSTATUS
+		GlobalMemoryStatusEx MEMORYSTATUSEX
+		GetProcessMemoryInfo PROCESS_MEMORY_COUNTERS_EX
+		物理内存
+		虚拟内存
+		页面文件
+		WorkingSet
+		PrivateBytes
 
 DemoMFC01
 	使用MFC创建对话窗口
