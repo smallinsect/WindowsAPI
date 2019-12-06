@@ -138,6 +138,16 @@ Demo01
 		GlobalMemoryStatus MEMORYSTATUS 32位机子使用
 		GlobalMemoryStatusEx MEMORYSTATUSEX 64位机子使用
 	fun20
+		为什么要创建多个堆
+		堆函数
+			HeapCreate
+			HeapAlloc
+			HeapReAlloc
+			HeapSize
+			HeapFree
+			HeapDestroy
+			GetProcessHeap
+			GetProcessHeaps
 	fun21
 	fun22
 	fun23
@@ -301,6 +311,15 @@ DemoWin23
 		环境变量
 		堆
 			malloc、calloc、HeapAlloc、HeapFree
+
+
+
+
+
+
+
+
+
 
 DemoMFC01
 	使用MFC创建对话窗口

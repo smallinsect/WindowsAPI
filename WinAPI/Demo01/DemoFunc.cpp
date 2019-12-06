@@ -770,7 +770,124 @@ void fun19(int argc, char *argv[]){
 	printf("可用页面文件：%lld字节\n", ms.ullAvailPageFile);
 
 }
-void fun20(int argc, char *argv[]){}
+//堆
+void fun20(int argc, char *argv[]){
+	SYSTEM_INFO si;
+	GetSystemInfo(&si);
+
+	HANDLE hHeap1 = HeapCreate(HEAP_NO_SERIALIZE,//堆 不序列化 可以优化执行速度
+		si.dwPageSize*2,//最小值 创建两页大小的堆
+		si.dwPageSize*10);//最大值 10页
+	if (hHeap1 == INVALID_HANDLE_VALUE) {
+		printf("HeapCreate hHeap1 失败 %d\n", GetLastError());
+		return;
+	}
+	printf("HeapCreate hHeap1 成功 初始最小2页 最大10页\n");
+
+	HANDLE hHeap2 = HeapCreate(HEAP_NO_SERIALIZE,
+		0,//最小值 1
+		0);//最大值 自动增长
+	if (hHeap2 == INVALID_HANDLE_VALUE) {
+		printf("HeapCreate hHeap2 失败 %d\n", GetLastError());
+		return;
+	}
+	printf("HeapCreate hHeap2 成功 初始最小1 最大自动增长\n");
+
+	//获取当前堆的数量
+	DWORD dwHeapNum = GetProcessHeaps(0, NULL);
+	if (dwHeapNum == 0) {
+		printf("GetProcessHeaps 失败 %d\n", GetLastError());
+		return;
+	}
+	printf("GetProcessHeaps 成功 堆有%d个\n", dwHeapNum);
+
+	//在第一个堆上分配内存
+	PVOID lpMem1 = HeapAlloc(hHeap1, 
+		HEAP_ZERO_MEMORY,//创建的内存 初始化为零
+		si.dwPageSize*3);//大小三页
+	if (lpMem1 == NULL) {
+		printf("HeapAlloc hHeap1 失败 %d\n", GetLastError());
+		return;
+	}
+	printf("HeapAlloc hHeap1 成功 0x%x\n", lpMem1);
+
+	//PVOID lpAloc1 = HeapAlloc(hHeap1,
+	//	HEAP_ZERO_MEMORY,
+	//	si.dwPageSize*11);
+	//if (lpAloc1 == NULL) {
+	//	printf("HeapAlloc lpAloc1 失败 %d\n", GetLastError());
+	//	return;
+	//}
+	//printf("HeapAlloc lpAloc1 成功 %d\n", GetLastError());
+
+	//在第二个堆上分配内存
+	PVOID lpMem2 = HeapAlloc(hHeap2,
+		HEAP_ZERO_MEMORY,//创建的内存 初始化为零
+		si.dwPageSize * 3);//大小三页
+	if (lpMem1 == NULL) {
+		printf("HeapAlloc hHeap1 失败 %d\n", GetLastError());
+		return;
+	}
+	printf("HeapAlloc hHeap1 成功 0x%x\n", lpMem1);
+
+	//重新分配内存大小
+	PVOID lpAloc2 = HeapReAlloc(hHeap2,
+		HEAP_ZERO_MEMORY,
+		lpMem2,
+		si.dwPageSize * 11);
+	if (lpAloc2 == NULL) {
+		printf("HeapAlloc lpAloc1 失败 %d\n", GetLastError());
+		return;
+	}
+	printf("HeapAlloc lpAloc1 成功 0x%x\n", lpAloc2);
+
+	DWORD dwHeapBlockSize = HeapSize(hHeap2, HEAP_NO_SERIALIZE, lpAloc2);
+	if (dwHeapBlockSize == -1) {
+		printf("HeapSize hHeap2 失败 %d\n", GetLastError());
+		return;
+	}
+	printf("HeapSize hHeap2 大小0x%x\n", dwHeapBlockSize);
+
+	//释放hHeap1堆上的lpMem1内存
+	if (!HeapFree(hHeap1, HEAP_NO_SERIALIZE, lpMem1)) {
+		printf("HeapFree hHeap1 lpMem1 失败 %d\n", GetLastError());
+		return;
+	}
+	printf("HeapFree hHeap1 lpMem1 成功 \n");
+	//
+	if (!HeapFree(hHeap2, HEAP_NO_SERIALIZE, lpAloc2)) {
+		printf("HeapFree hHeap1 lpMem1 失败 %d\n", GetLastError());
+		return;
+	}
+	printf("HeapFree hHeap1 lpMem1 成功 \n");
+
+	//销毁堆hHeap1
+	if (!HeapDestroy(hHeap1)) {
+		printf("HeapDestroy hHeap1 失败 %d\n", GetLastError());
+		return;
+	}
+	printf("HeapDestroy hHeap1 成功\n");
+	//销毁堆hHeap2
+	if (!HeapDestroy(hHeap2)) {
+		printf("HeapDestroy hHeap2 失败 %d\n", GetLastError());
+		return;
+	}
+	printf("HeapDestroy hHeap2 成功\n");
+
+	//使用进程的默认堆
+	HANDLE hHeap3 = GetProcessHeap();
+	LPVOID lpMem3 = HeapAlloc(hHeap3, HEAP_NO_SERIALIZE, si.dwPageSize*3);
+	if (lpMem3 == NULL) {
+		printf("HeapAlloc hHeap3 lpMem3 失败 %d\n", GetLastError());
+		return;
+	}
+	printf("HeapAlloc hHeap3 lpMem3 成功\n");
+	if (!HeapFree(hHeap3, HEAP_NO_SERIALIZE, lpMem3)) {
+		printf("HeapFree \n");
+		return;
+	}
+	//进程堆 不能销毁
+}
 void fun21(int argc, char *argv[]){}
 void fun22(int argc, char *argv[]){}
 void fun23(int argc, char *argv[]){}
