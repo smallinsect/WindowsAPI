@@ -756,7 +756,20 @@ void fun18(int argc, char *argv[]){
 	}
 	free(pBuffer);
 }
-void fun19(int argc, char *argv[]){}
+//内存信息
+void fun19(int argc, char *argv[]){
+	MEMORYSTATUSEX ms;
+	ms.dwLength = sizeof(ms);
+
+	GlobalMemoryStatusEx(&ms);
+	printf("全部物理内存：%lld字节\n", ms.ullTotalPhys);
+	printf("可用物理内存：%lld字节\n", ms.ullAvailPhys);
+	printf("全部虚拟内存：%lld字节\n", ms.ullTotalVirtual);
+	printf("可用虚拟内存：%lld字节\n", ms.ullAvailVirtual);
+	printf("全部页面文件：%lld字节\n", ms.ullTotalPageFile);
+	printf("可用页面文件：%lld字节\n", ms.ullAvailPageFile);
+
+}
 void fun20(int argc, char *argv[]){}
 void fun21(int argc, char *argv[]){}
 void fun22(int argc, char *argv[]){}

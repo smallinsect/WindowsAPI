@@ -114,10 +114,17 @@ Demo01
 		WTSFreeMemory(pProcessInfo);
 	fun18 /?????????????????????????????
 		通过ntdll.dll中的函数进行枚举
-		ZwQuerySystemInformation
-		
-		
+		ZwQuerySystemInformation	
 	fun19
+		内存
+		地址空间：4GB
+		用户内存空间：2GB
+		内核内存空间：2GB
+		物理内存
+		虚拟内存
+		页面文件
+		GlobalMemoryStatus MEMORYSTATUS 32位机子使用
+		GlobalMemoryStatusEx MEMORYSTATUSEX 64位机子使用
 	fun20
 	fun21
 	fun22
