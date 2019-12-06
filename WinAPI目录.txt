@@ -374,6 +374,81 @@ DemoMFC17
 	内存映射文件_共享数据 适合读大的文件
 	进程A->内存映射<-进程B
 DemoMFC18
+	接受数据
+
+DemoMFC19 /????????????????
+	匿名管道 父进程和子进程之间的通信
+	HANDLE hPWrite, hPRead;//管道写和读
+	SECURITY_ATTRIBUTES sa = {0};//安全属性
+	sa.nLength = sizeof(sa);
+	sa.bInheritHandle = TRUE;
+	sa.lpSecurityDescriptor = NULL;
+
+	BOOL bCreate = CreatePipe(&hPRead, &hPWrite, &sa, 0);//创建管道
+	if(!bCreate){
+		//创建管道失败
+	}
+
+	PROCESS_INFORMATION pi={0};//创建的进程信息
+	STARTINFO si={0};//启动的进程信息
+	si.cv = sizeof(si);
+	si.hStdInput = GetStdHandle(STD_INPUT_HANDLE);//标准的输入
+	si.hStdOutput = si.hStdError = hPWrite;//标注管道的输出
+	//si.wShowWindow = TRUE;//窗口显示
+	si.wShowWindow = SW_HIDE;//窗口隐藏
+	si.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
+	
+	TCHAR szCmd[MAX_PATH*2] = {0};
+	GetDlgItemText(IDC_EDIT1, szCmd, MAX_PATH*2);
+	//TCHAR szCmd[MAX_PATH*2] = TEXT("cmd");
+	//项目用多字节字符集
+	BOOL bCreate = CreateProcess(NULL, szCmd, NULL, NULL, TRUE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi);
+	CloseHandle(pi.hProcess);
+	CloseHandle(pi.hThread);
+	if(bCreate){
+		//有没有创建成功	
+		CloseHandle(hPWrite);
+		CloseHandle(hPRead);
+	}
+	CString str;
+	CloseHandle(hPWrite);//先关闭管道写，才能去读管道
+	TCHAR szBuffer[4096] = {0};
+	DWORD dwRead;
+	while(TRUE){
+		memset(szBuffer, 0, sizeof(szBuffer));
+		if(!ReadFile(hPRead, szBuffer, 4096, &dwRead, NULL)){
+			break;
+		}
+		str += szBuffer;
+		SetDlgItemText(IDC_EDIT1, str);
+	}
+	CloseHandle(hPRead);
+
+	命名管道 任意两个进程之间同行
+DemoMFC20 服务端 邮槽传递数据最多424字节大小数据
+	进程通信-邮槽
+		服务端创建邮槽 读取数据
+		客户端打开邮槽 写入数据
+	邮槽名称
+		\\.\mailslot\[path\]name 本机
+		\\DomainName\[path\]name 网络上
+		\\ComputerName\[path\]name
+		\\*\mailslot\[path\]name 广播
+	创建邮槽和打开邮槽
+		CreateMailslot()、CreateFile()
+	读写邮槽
+		WriteFile()、ReadFile()
+DemoMFC21 客户端
+	进程通信-邮槽
+
+
+
+
+
+
+
+
+
 
 
 
